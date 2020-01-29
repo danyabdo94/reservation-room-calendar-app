@@ -4,6 +4,7 @@ Task Todo  :
 3- build the calendar to be ready to be injected as a module or a standalone 
 4- give the functionality (reserve - cancel) work 
 5- call the APIs
-6- make the calendar a library 
-7- unit test for calendar and reservation
-8- enhance the ui on hover 
+6- handle error handling (reserve same room twice) 
+7- make the calendar a library 
+8- unit test for calendar and reservation
+9- enhance the ui on hover 
