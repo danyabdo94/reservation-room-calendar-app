@@ -4,6 +4,7 @@
 class CalendarController {
   /** @ngInject */
   constructor($http, $scope, moment, $log) {
+    $scope.arrayOfSevenElements = [0, 1, 2, 3, 4, 5, 6];
     this.numberOfDaysShown = 42;
     this.moment = moment;
     this.$log = $log;

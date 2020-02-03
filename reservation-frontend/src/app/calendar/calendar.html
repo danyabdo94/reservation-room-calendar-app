@@ -24,34 +24,11 @@
       <span>Fri</span>
       <span>Sat</span>
       <div ng-repeat="(key, value) in monthDays track by $index">
-        <span ng-click="dayClicked(value[0])" ng-class="isSameDay(value[0])">
-          <md-tooltip ng-if="inReservationList(value[0])"> {{inReservationList(value[0]).tennantName}}</md-tooltip>
-          {{value[0].date()}}
-        </span>
-        <span ng-click="dayClicked(value[1])" ng-class="isSameDay(value[1])">
-          <md-tooltip ng-if="inReservationList(value[1])"> {{inReservationList(value[1]).tennantName}}</md-tooltip>
-
-          {{value[1].date()}}
-        </span>
-        <span ng-click="dayClicked(value[2])" ng-class="isSameDay(value[2])">
-          <md-tooltip ng-if="inReservationList(value[2])"> {{inReservationList(value[2]).tennantName}}</md-tooltip>
-          {{value[2].date()}}
-        </span>
-        <span ng-click="dayClicked(value[3])" ng-class="isSameDay(value[3])">
-          <md-tooltip ng-if="inReservationList(value[3])"> {{inReservationList(value[3]).tennantName}}</md-tooltip>
-          {{value[3].date()}}
-        </span>
-        <span ng-click="dayClicked(value[4])" ng-class="isSameDay(value[4])">
-          <md-tooltip ng-if="inReservationList(value[4])"> {{inReservationList(value[4]).tennantName}}</md-tooltip>
-          {{value[4].date()}}
-        </span>
-        <span ng-click="dayClicked(value[5])" ng-class="isSameDay(value[5])">
-          <md-tooltip ng-if="inReservationList(value[5])"> {{inReservationList(value[5]).tennantName}}</md-tooltip>
-          {{value[5].date()}}
-        </span>
-        <span ng-click="dayClicked(value[6])" ng-class="isSameDay(value[6])">
-          <md-tooltip ng-if="inReservationList(value[6])"> {{inReservationList(value[6]).tennantName}}</md-tooltip>
-          {{value[6].date()}}
+        <span ng-click="dayClicked(value[element])" ng-class="isSameDay(value[element])"
+        ng-repeat="element in arrayOfSevenElements">
+          <md-tooltip ng-if="inReservationList(value[element])"> {{inReservationList(value[element]).tennantName}}
+          </md-tooltip>
+          {{value[element].date()}}
         </span>
       </div>
     </div>
