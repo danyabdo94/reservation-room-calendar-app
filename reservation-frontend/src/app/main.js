@@ -3,18 +3,37 @@ class MainController {
   constructor($http, $scope, $log, serverIp, moment) {
     $scope.currentDay = null;
     this.$log = $log;
+    this.listOfReservations = [];
     this.$http = $http;
     this.serverIp = serverIp;
     this.moment = moment;
+    $scope.selectedDay = null;
+    $scope.reservation = {
+      tennantName: null,
+      time: null,
+      reserved: false
+    };
 
     $scope.$on('dayChanged', (event, day) => {
-      this.$log.log(event, day);
-      // this.$http.get(this.serverIp + '/reserve/1577790000/1609153200')
-      //   .then(data => {
-      //     this.$log.log(data.data);
-      //   }).catch(erro => {
-      //     this.$log.log(erro);
-      //   });
+      $scope.selectedDay = day;
+
+      // resetting
+      $scope.reservation.reserved = false;
+      $scope.reservation.tennantName = null;
+      $scope.reservation.time = null;
+
+      // if exist put in model
+      this.listOfReservations.forEach(element => {
+        if (moment(element.time * 1000).isSame(moment(day), 'day')) {
+          $scope.reservation = element;
+          $scope.reservation.reserved = true;
+        }
+      });
+
+      // if not make a new model with just time ready to be saved
+      if (!$scope.reservation.reserved) {
+        $scope.reservation.time = moment(day).utc().hours(11).minutes(0).unix();
+      }
     });
 
     $scope.$on('monthChanged', (event, month, year) => {
@@ -24,7 +43,7 @@ class MainController {
 
       this.$http.get(this.serverIp + '/reserve/' + fromDate + '/' + toDate)
         .then(data => {
-          this.$log.log(data.data);
+          this.listOfReservations = data.data.reserved;
         }).catch(erro => {
           this.$log.log(erro);
         });

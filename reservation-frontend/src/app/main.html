@@ -2,12 +2,25 @@
   <reservation-header></reservation-header>
   <main class="main">
     <reservation-title></reservation-title>
-    <div layout="row">
+    <div layout="row" layout-align="space-around center">
       <div flex="70">
-        <reservation-calendar ></reservation-calendar>
+        <reservation-calendar></reservation-calendar>
       </div>
       <div flex="30" >
-
+        <md-card style="margin: 1rem;" ng-if="reservation.time" md-theme-watch>
+          <md-card-title>
+            <md-card-title-text>
+                <md-input-container>
+                <label>Name</label>
+                <input ng-disabled="reservation.reserved" ng-model="reservation.tennantName">
+              </md-input-container>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-if="reservation.reserved" ng-click="delete()">Delete</md-button>
+            <md-button ng-if="!reservation.reserved" ng-click="save()">Save</md-button>
+          </md-card-actions>
+        </md-card>
       </div>
     </div>
 
