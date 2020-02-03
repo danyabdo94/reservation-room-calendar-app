@@ -1,6 +1,8 @@
 <div class="calendar-container">
   <div class="calendar">
     <div class="cal-container calendar">
+      <div class="calendar-month">{{monthYearText}}</div>
+      <md-divider></md-divider>
       <span>Sun</span>
       <span>Mon</span>
       <span>Tue</span>
@@ -9,13 +11,13 @@
       <span>Fri</span>
       <span>Sat</span>
       <div ng-repeat="(key, value) in monthDays track by $index">
-        <span>{{value[0].date()}}</span>
-        <span>{{value[1].date()}}</span>
-        <span>{{value[2].date()}}</span>
-        <span>{{value[3].date()}}</span>
-        <span>{{value[4].date()}}</span>
-        <span>{{value[5].date()}}</span>
-        <span>{{value[6].date()}}</span>
+        <span ng-class="{'not-in-month':value[0].month()!==currentMonth}">{{value[0].date()}}</span>
+        <span ng-class="{'not-in-month':value[1].month()!==currentMonth}">{{value[1].date()}}</span>
+        <span ng-class="{'not-in-month':value[2].month()!==currentMonth}">{{value[2].date()}}</span>
+        <span ng-class="{'not-in-month':value[3].month()!==currentMonth}">{{value[3].date()}}</span>
+        <span ng-class="{'not-in-month':value[4].month()!==currentMonth}">{{value[4].date()}}</span>
+        <span ng-class="{'not-in-month':value[5].month()!==currentMonth}">{{value[5].date()}}</span>
+        <span ng-class="{'not-in-month':value[6].month()!==currentMonth}">{{value[6].date()}}</span>
       </div>
     </div>
   </div>

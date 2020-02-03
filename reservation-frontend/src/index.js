@@ -20,8 +20,11 @@ import {
 import './index.scss';
 require('angular-moment');
 
+import ngMaterial from 'angular-material';
+import ngMessages from 'angular-messages';
+
 angular
-  .module('app', ['angularMoment', calendarModule])
+  .module('app', ['angularMoment', ngMaterial, ngMessages, calendarModule])
   .component('app', main)
   .component('reservationHeader', header)
   .component('reservationTitle', title)

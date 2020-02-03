@@ -8,6 +8,9 @@ class CalendarController {
     this.moment = moment;
     this.$log = $log;
     $scope.today = moment();
+    $scope.currentMonth = moment().month();
+    $scope.currentYear = moment().year();
+    $scope.monthYearText = moment().month($scope.currentMonth).year($scope.currentYear).format('MMMM YYYY');
     $scope.firstDayOfMonth = moment().date(1);
     $scope.firstSunday = this.getFirstSunday($scope.firstDayOfMonth);
     $scope.monthDays = this.getMonthDays($scope.firstSunday);
