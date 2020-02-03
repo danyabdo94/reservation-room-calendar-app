@@ -8,6 +8,7 @@ class CalendarController {
     this.moment = moment;
     this.$log = $log;
     this.$scope = $scope;
+    this.reservations = [];
     $scope.today = moment();
     $scope.currentMonth = moment().month();
     $scope.currentYear = moment().year();
@@ -19,6 +20,11 @@ class CalendarController {
     $scope.dayClicked = day => {
       $scope.$emit('dayChanged', day);
     };
+    $scope.inReservationList = day => this.inReservationList(day);
+
+    $scope.$on('reservationsList', (event, data) => {
+      this.reservations = data;
+    });
 
     $scope.next = () => {
       $scope.firstDayOfMonth.add(1, 'month');
@@ -30,14 +36,35 @@ class CalendarController {
     };
     $scope.prev = () => {
       $scope.firstDayOfMonth.subtract(1, 'month');
-      $scope.firstSunday = this.getFirstSunday($scope.firstDayOfMonth);
-      $scope.monthDays = this.getMonthDays($scope.firstSunday);
       $scope.currentMonth = moment($scope.firstDayOfMonth).month();
       $scope.currentYear = moment($scope.firstDayOfMonth).year();
+      $scope.firstSunday = this.getFirstSunday($scope.firstDayOfMonth);
+      $scope.monthDays = this.getMonthDays($scope.firstSunday);
+    };
+    $scope.$watch(() => $scope.currentMonth, newValue => {
+      $log.log(newValue);
+      if (newValue) {
+        this.$scope.$emit('monthChanged', newValue, this.$scope.currentYear);
+      }
+    });
+    // NG Class for not in month and is reserved styles
+    $scope.isSameDay = day => {
+      const objectReturned = {
+        'not-in-month': day.month() !== $scope.currentMonth,
+        circle: this.inReservationList(day)
+      };
+      return objectReturned;
     };
   }
-  monthChanged() {
-    this.$scope.$emit('monthChanged', this.$scope.currentMonth, this.$scope.currentYear);
+
+  inReservationList(day) {
+    let foundObject = null;
+    this.reservations.forEach(element => {
+      if (this.moment(element.time * 1000).isSame(this.moment(day), 'day')) {
+        foundObject = element;
+      }
+    });
+    return foundObject;
   }
 
   // get first sunday of a month
@@ -62,7 +89,6 @@ class CalendarController {
       }
       arrayOfDays[currrentWeek].push(this.moment(firstSunday).add(index, 'd'));
     }
-    this.monthChanged();
     return arrayOfDays;
   }
 

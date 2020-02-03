@@ -21,7 +21,7 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-if="reservation.reserved" ng-click="delete()">Cancel</md-button>
+            <md-button ng-if="reservation.reserved" ng-click="cancel()">Cancel</md-button>
             <md-button ng-if="!reservation.reserved" ng-click="save()">Save</md-button>
           </md-card-actions>
         </md-card>

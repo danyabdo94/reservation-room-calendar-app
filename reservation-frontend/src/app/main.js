@@ -49,12 +49,15 @@ class MainController {
 
     $scope.$on('monthChanged', (event, month, year) => {
       this.$log.log(event, month, year);
-      const fromDate = moment([year, month, 1, 0]).unix();
+      const fromDate = moment([year, month, 1, 0]).utc().hours(10).minutes(59).unix();
       const toDate = moment([year, month, 1, 0]).endOf('month').unix();
 
       this.$http.get(this.serverIp + '/reserve/' + fromDate + '/' + toDate)
         .then(data => {
+          // eslint-disable-next-line no-return-assign
+          // data.data.reserved.map(element => element.time = moment(element.time).hours(11).minutes(0).unix());
           this.listOfReservations = data.data.reserved;
+          $scope.$broadcast('reservationsList', [...this.listOfReservations]);
         }).catch(erro => {
           this.$log.log(erro);
         });
@@ -69,7 +72,18 @@ class MainController {
       this.$http.post(this.serverIp + '/reserve/', tempData)
         .then(() => {
           $scope.reservation.reserved = true;
+          const tempData = angular.copy($scope.reservation);
+          this.listOfReservations.push(tempData);
           $scope.loading = false;
+          $mdToast.show(
+              $mdToast.simple()
+              .textContent('Saved successfully')
+              .hideDelay(3000))
+            .then(() => {
+              $log.log('Toast dismissed.');
+            }).catch(() => {
+              $log.log('Toast failed or was forced to close early by another toast.');
+            });
         }).catch(erro => {
           this.$log.log(erro);
           $scope.loading = false;
@@ -85,6 +99,40 @@ class MainController {
         });
     };
 
+    $scope.cancel = () => {
+      $scope.loading = true;
+      const tempData = angular.copy($scope.reservation);
+      this.$log.log(tempData.time);
+      tempData.time = moment($scope.selectedDay).utc().hours(11).minutes(0).unix();
+      tempData.reserved = false;
+      this.$http.post(this.serverIp + '/reserve/', tempData)
+        .then(() => {
+          $scope.reservation.reserved = false;
+          this.listOfReservations.filter(element => element.time !== $scope.reservation.time);
+          $mdToast.show(
+              $mdToast.simple()
+              .textContent('Erased successfully')
+              .hideDelay(3000))
+            .then(() => {
+              $log.log('Toast dismissed.');
+            }).catch(() => {
+              $log.log('Toast failed or was forced to close early by another toast.');
+            });
+          $scope.loading = false;
+        }).catch(erro => {
+          this.$log.log(erro);
+          $scope.loading = false;
+          $mdToast.show(
+              $mdToast.simple()
+              .textContent(erro.data)
+              .hideDelay(3000))
+            .then(() => {
+              $log.log('Toast dismissed.');
+            }).catch(() => {
+              $log.log('Toast failed or was forced to close early by another toast.');
+            });
+        });
+    };
     $scope.getFromUnixToStringDateFormat = date => {
       return moment(date * 1000).format('DD/MM/YYYY');
     };
