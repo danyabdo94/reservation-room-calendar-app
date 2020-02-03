@@ -11,13 +11,13 @@
       <span>Fri</span>
       <span>Sat</span>
       <div ng-repeat="(key, value) in monthDays track by $index">
-        <span ng-class="{'not-in-month':value[0].month()!==currentMonth}">{{value[0].date()}}</span>
-        <span ng-class="{'not-in-month':value[1].month()!==currentMonth}">{{value[1].date()}}</span>
-        <span ng-class="{'not-in-month':value[2].month()!==currentMonth}">{{value[2].date()}}</span>
-        <span ng-class="{'not-in-month':value[3].month()!==currentMonth}">{{value[3].date()}}</span>
-        <span ng-class="{'not-in-month':value[4].month()!==currentMonth}">{{value[4].date()}}</span>
-        <span ng-class="{'not-in-month':value[5].month()!==currentMonth}">{{value[5].date()}}</span>
-        <span ng-class="{'not-in-month':value[6].month()!==currentMonth}">{{value[6].date()}}</span>
+        <span ng-click="dayClicked(value[0])" ng-class="{'not-in-month':value[0].month()!==currentMonth}">{{value[0].date()}}</span>
+        <span ng-click="dayClicked(value[1])" ng-class="{'not-in-month':value[1].month()!==currentMonth}">{{value[1].date()}}</span>
+        <span ng-click="dayClicked(value[2])" ng-class="{'not-in-month':value[2].month()!==currentMonth}">{{value[2].date()}}</span>
+        <span ng-click="dayClicked(value[3])" ng-class="{'not-in-month':value[3].month()!==currentMonth}">{{value[3].date()}}</span>
+        <span ng-click="dayClicked(value[4])" ng-class="{'not-in-month':value[4].month()!==currentMonth}">{{value[4].date()}}</span>
+        <span ng-click="dayClicked(value[5])" ng-class="{'not-in-month':value[5].month()!==currentMonth}">{{value[5].date()}}</span>
+        <span ng-click="dayClicked(value[6])" ng-class="{'not-in-month':value[6].month()!==currentMonth}">{{value[6].date()}}</span>
       </div>
     </div>
   </div>

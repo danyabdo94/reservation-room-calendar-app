@@ -7,6 +7,7 @@ class CalendarController {
     this.numberOfDaysShown = 42;
     this.moment = moment;
     this.$log = $log;
+    this.$scope = $scope;
     $scope.today = moment();
     $scope.currentMonth = moment().month();
     $scope.currentYear = moment().year();
@@ -14,12 +15,13 @@ class CalendarController {
     $scope.firstDayOfMonth = moment().date(1);
     $scope.firstSunday = this.getFirstSunday($scope.firstDayOfMonth);
     $scope.monthDays = this.getMonthDays($scope.firstSunday);
-    $log.log($scope.monthDays);
-    // $http
-    //   .get('app/calendar/calendar.json')
-    //   .then(response => {
-    //     this.calendar = response.data;
-    //   });
+
+    $scope.dayClicked = day => {
+      $scope.$emit('dayChanged', day);
+    };
+  }
+  monthChanged() {
+    this.$scope.$emit('monthChanged', this.$scope.currentMonth, this.$scope.currentYear);
   }
 
   // get first sunday of a month
@@ -39,14 +41,15 @@ class CalendarController {
     };
     let currrentWeek = 0;
     for (let index = 0; index < this.numberOfDaysShown; index++) {
-      this.$log.log(currrentWeek);
       if (index / 7 >= currrentWeek + 1) {
         currrentWeek += 1;
       }
       arrayOfDays[currrentWeek].push(this.moment(firstSunday).add(index, 'd'));
     }
+    this.monthChanged();
     return arrayOfDays;
   }
+
 }
 
 export const calendar = {

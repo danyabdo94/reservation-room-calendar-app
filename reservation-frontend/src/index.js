@@ -22,9 +22,12 @@ require('angular-moment');
 
 import ngMaterial from 'angular-material';
 import ngMessages from 'angular-messages';
+// import HttpService from "./app/services/ReservationService";
 
 angular
   .module('app', ['angularMoment', ngMaterial, ngMessages, calendarModule])
+  // .service('HttpService', HttpService)
+  .constant('serverIp', 'http://localhost:4100')
   .component('app', main)
   .component('reservationHeader', header)
   .component('reservationTitle', title)
