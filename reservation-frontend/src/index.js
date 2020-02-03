@@ -18,10 +18,14 @@ import {
 } from './app/footer';
 
 import './index.scss';
+require('angular-moment');
 
 angular
-  .module('app', [calendarModule])
+  .module('app', ['angularMoment', calendarModule])
   .component('app', main)
   .component('reservationHeader', header)
   .component('reservationTitle', title)
-  .component('reservationFooter', footer);
+  .component('reservationFooter', footer)
+  .run(amMoment => {
+    amMoment.changeLocale('en');
+  });

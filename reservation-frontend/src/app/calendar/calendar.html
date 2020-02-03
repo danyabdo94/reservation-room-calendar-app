@@ -1,5 +1,22 @@
 <div class="calendar-container">
   <div class="calendar">
-    <h4>sa</h4>
+    <div class="cal-container calendar">
+      <span>Sun</span>
+      <span>Mon</span>
+      <span>Tue</span>
+      <span>Wed</span>
+      <span>Thu</span>
+      <span>Fri</span>
+      <span>Sat</span>
+      <div ng-repeat="(key, value) in monthDays track by $index">
+        <span>{{value[0].date()}}</span>
+        <span>{{value[1].date()}}</span>
+        <span>{{value[2].date()}}</span>
+        <span>{{value[3].date()}}</span>
+        <span>{{value[4].date()}}</span>
+        <span>{{value[5].date()}}</span>
+        <span>{{value[6].date()}}</span>
+      </div>
+    </div>
   </div>
 </div>
