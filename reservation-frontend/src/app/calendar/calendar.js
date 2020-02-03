@@ -19,6 +19,22 @@ class CalendarController {
     $scope.dayClicked = day => {
       $scope.$emit('dayChanged', day);
     };
+
+    $scope.next = () => {
+      $scope.firstDayOfMonth.add(1, 'month');
+      $scope.firstSunday = this.getFirstSunday($scope.firstDayOfMonth);
+      $scope.monthDays = this.getMonthDays($scope.firstSunday);
+      $scope.currentMonth = moment($scope.firstDayOfMonth).month();
+      $scope.currentYear = moment($scope.firstDayOfMonth).year();
+      $scope.monthYearText = moment().month($scope.currentMonth).year($scope.currentYear).format('MMMM YYYY');
+    };
+    $scope.prev = () => {
+      $scope.firstDayOfMonth.subtract(1, 'month');
+      $scope.firstSunday = this.getFirstSunday($scope.firstDayOfMonth);
+      $scope.monthDays = this.getMonthDays($scope.firstSunday);
+      $scope.currentMonth = moment($scope.firstDayOfMonth).month();
+      $scope.currentYear = moment($scope.firstDayOfMonth).year();
+    };
   }
   monthChanged() {
     this.$scope.$emit('monthChanged', this.$scope.currentMonth, this.$scope.currentYear);

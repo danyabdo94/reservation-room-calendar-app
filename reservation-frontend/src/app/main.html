@@ -2,25 +2,43 @@
   <reservation-header></reservation-header>
   <main class="main">
     <reservation-title></reservation-title>
-    <div layout="row" layout-align="space-around center">
-      <div flex="70">
+    <div layout="row" layout-xs="column" layout-align="space-around center">
+      <div flex-gt-sm="70" flex="100">
         <reservation-calendar></reservation-calendar>
       </div>
-      <div flex="30" >
-        <md-card style="margin: 1rem;" ng-if="reservation.time" md-theme-watch>
+      <div flex-gt-sm="30" flex="100">
+        <md-card style="margin: 1rem;" ng-if="reservation.time && !loading" md-theme-watch>
           <md-card-title>
             <md-card-title-text>
-                <md-input-container>
+              <md-input-container>
                 <label>Name</label>
                 <input ng-disabled="reservation.reserved" ng-model="reservation.tennantName">
+              </md-input-container>
+              <md-input-container>
+                <label>Date</label>
+                <input ng-disabled="true" ng-value="getFromUnixToStringDateFormat(reservation.time)">
               </md-input-container>
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-if="reservation.reserved" ng-click="delete()">Delete</md-button>
+            <md-button ng-if="reservation.reserved" ng-click="delete()">Cancel</md-button>
             <md-button ng-if="!reservation.reserved" ng-click="save()">Save</md-button>
           </md-card-actions>
         </md-card>
+
+        <md-card style="margin: 1rem;" ng-if="loading" md-theme-watch>
+          <md-card-title>
+            <md-card-title-text>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content>
+            <md-progress-circular class="md-hue-2" md-diameter="20px">
+            </md-progress-circular>
+          </md-card-content>
+          <md-card-actions layout="row" layout-align="end center">
+          </md-card-actions>
+        </md-card>
+
       </div>
     </div>
 
